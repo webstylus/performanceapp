@@ -1,5 +1,6 @@
 import React, { memo } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
+import lodash from 'lodash'
 
 interface Props {
   data: {
@@ -25,9 +26,7 @@ function FriendComponent({ data, follow }: Props) {
         <Text>
           {data.name} - Likes: {data.likes}
         </Text>
-        <Text>
-          Online em: {data.online}
-        </Text>
+        <Text>Online em: {data.online}</Text>
       </View>
 
       <TouchableOpacity onPress={follow}>
@@ -38,5 +37,5 @@ function FriendComponent({ data, follow }: Props) {
 }
 
 export const Friend = memo(FriendComponent, (prevProps, nextProps) => {
-  return Object.is(prevProps.data, nextProps.data)
+  return lodash.isEqual(prevProps.data, nextProps.data)
 })
