@@ -1,6 +1,13 @@
-import React, {useState} from 'react';
-import {View, Text, TextInput, Button, StyleSheet, ScrollView} from 'react-native';
-import {FriendList} from "../components/FriendList";
+import React, {useCallback, useState} from 'react'
+import {
+    View,
+    Text,
+    TextInput,
+    Button,
+    StyleSheet,
+    ScrollView
+} from 'react-native'
+import {FriendList} from '../components/FriendList'
 
 export function Home() {
     const [name, setName] = useState('')
@@ -8,13 +15,20 @@ export function Home() {
 
     async function handleSearch() {
         try {
-            const response = await fetch(`http://192.168.0.107:3333/friends?q=${name}`)
+            const response = await fetch(
+                `http://192.168.0.107:3333/friends?q=${name}`
+            )
             const data = await response.json()
             setFriends(data)
         } catch (e) {
             console.log(e)
         }
     }
+
+    const handleFollow = useCallback(() => {
+        console.log('follow user')
+    }, [])
+
 
     return (
         <View style={styles.container}>
@@ -29,11 +43,10 @@ export function Home() {
             <Button title={'Buscar'} onPress={handleSearch}/>
 
             <ScrollView style={styles.list}>
-                <FriendList data={friends}/>
+                <FriendList data={friends} follow={handleFollow}/>
             </ScrollView>
         </View>
-    );
-
+    )
 }
 
 const styles = StyleSheet.create({
@@ -43,13 +56,13 @@ const styles = StyleSheet.create({
         padding: 25
     },
     title: {
-      fontSize: 24,
-      fontWeight: "bold"
+        fontSize: 24,
+        fontWeight: 'bold'
     },
     input: {
         borderWidth: 1,
         padding: 7,
-        marginBottom: 10
+        marginVertical: 10
     },
     list: {
         marginTop: 20

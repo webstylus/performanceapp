@@ -26,8 +26,8 @@ async function handleSearch() {
 ```
 
 ```shell
-    $ yarn install
-    $ expo start
-    $ json-server -d 750 -w -H your-host -p 3333 ./src/api/server.js
-    $ react-devtools
+$ yarn install
+$ expo start
+$ json-server -d 750 -w -H your-host -p 3333 ./src/api/server.js
+$ react-devtools
 ```
