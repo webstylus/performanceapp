@@ -6,6 +6,7 @@ interface Props {
     id: number
     name: string
     likes: number
+    online: string
   }
   follow: () => void
 }
@@ -20,9 +21,14 @@ function FriendComponent({ data, follow }: Props) {
         alignItems: 'center'
       }}
     >
-      <Text>
-        {data.name} - Likes: {data.likes}
-      </Text>
+      <View>
+        <Text>
+          {data.name} - Likes: {data.likes}
+        </Text>
+        <Text>
+          Online em: {data.online}
+        </Text>
+      </View>
 
       <TouchableOpacity onPress={follow}>
         <Text>Deixar de seguir</Text>

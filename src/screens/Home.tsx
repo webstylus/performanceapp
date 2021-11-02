@@ -9,6 +9,12 @@ import {
 } from 'react-native'
 import {FriendList} from '../components/FriendList'
 
+interface Data {
+    id: number
+    name: string
+    likes: number
+}
+
 export function Home() {
     const [name, setName] = useState('')
     const [friends, setFriends] = useState([])
@@ -19,7 +25,17 @@ export function Home() {
                 `http://192.168.0.107:3333/friends?q=${name}`
             )
             const data = await response.json()
-            setFriends(data)
+
+            const formattedData = data.map((item:Data) => {
+                return {
+                    id: item.id,
+                    name: item.name,
+                    likes: item.likes,
+                    online: `${new Date().getHours()}:${new Date().getMinutes()}`
+                }
+            })
+
+            setFriends(formattedData)
         } catch (e) {
             console.log(e)
         }
@@ -42,9 +58,9 @@ export function Home() {
 
             <Button title={'Buscar'} onPress={handleSearch}/>
 
-            <ScrollView style={styles.list}>
+            <View style={styles.list}>
                 <FriendList data={friends} follow={handleFollow}/>
-            </ScrollView>
+            </View>
         </View>
     )
 }
@@ -52,7 +68,7 @@ export function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 100,
+        paddingTop: 100,
         padding: 25
     },
     title: {
